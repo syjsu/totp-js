@@ -6,6 +6,7 @@
 <title>Time Based One Time Password (TOTP) generator</title>
 <script type="text/javascript" src="jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="sha.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
 
 <style type='text/css'> 
 	body {
@@ -100,7 +101,10 @@
 
 	$(function () {
 		$('#secret').val(generateBase32Secret());
-		$('#otpauthQr').attr('src', 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=300x300&chld=M|0&cht=qr&chl=otpauth://totp/TOTP%20test%3Fsecret%3D' + $('#secret').val());
+		//$('#otpauthQr').attr('src', 'https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=300x300&chld=M|0&cht=qr&chl=otpauth://totp/TOTP%20test%3Fsecret%3D' + $('#secret').val());
+
+		$('#otpauthQr').qrcode({width: 300,height: 300,text: $('#secret').val() });
+
 		generateTOTP();
 		setInterval(updateTimer, 1000);
 	});
@@ -117,7 +121,7 @@
 		<br/>
 		<b>Google Authenticator QR-code:</b>
 		<br/>
-		<img id="otpauthQr" src="" />
+		<div id="otpauthQr"></div>
 		<br/><br/>
 		<b>TOTP code:</b>
 		<br/>
